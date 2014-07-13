@@ -1,0 +1,7 @@
+- verificar se o zip já existe e baixar apenas caso contrário, para funcionar como sistema de atualização
+- criar interface em linha de comando
+- unzipar!
+- tratamento de exceções!
+- verificar a forma correta de tratar uma exeção HTTPError, com relação ao close()
+- fazer downloader até o ano atual
+- extrair para arquivo a parte a configuração de páginas para download
