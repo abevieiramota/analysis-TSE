@@ -4,7 +4,7 @@ import os
 import zipfile
 
 DADOS_DIR = 'dados'
-ANOS_ELEICOES__OLD = [1945, 1947, 1950, 1954, 1955, 1958, 1960, 1962, 1965, 1966, 1970, 1974, 1978, 1982, 1986, 1989, 1990, 1994, 1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014]
+ANOS_ELEICOES = [1945, 1947, 1950, 1954, 1955, 1958, 1960, 1962, 1965, 1966, 1970, 1974, 1978, 1982, 1986, 1989, 1990, 1994, 1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014]
 
 ELEITORADO = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_%(ano)d.zip",
               'adicionais': ['http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_ATUAL.zip'],
@@ -14,6 +14,9 @@ ELEITORADO = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/per
 CANDIDATOS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_%(ano)d.zip",
               'folder_name': 'candidatos'}
 
+CANDIDATOS_BENS = {'http://agencia.tse.jus.br/estatistica/sead/odsele/bem_candidato/bem_candidato_%(ano)d.zip',
+                   'folder_name': 'candidatos_bens'}
+
 CANDIDATOS_LEGENDAS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_legendas/consulta_legendas_%(ano)d.zip",
                        'folder_name': 'candidatos_legendas'
                        }
@@ -22,7 +25,7 @@ CANDIDATOS_VAGAS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odse
                     'folder_name': 'candidatos_vagas'
                     }
 
-RESULTADOS_APURACAO = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_vagas/consulta_vagas_%(ano)d.zip",
+RESULTADOS_APURACAO = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_uf/detalhe_votacao_uf_%(ano)d.zip",
                        'folder_name': 'resultados_apuracao'}
 
 RESULTADOS_VOTACAO_NOMINAL = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_candidato_uf/votacao_candidato_uf_%(ano)d.zip",
@@ -39,7 +42,7 @@ PRESTACAO_CONTAS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odse
                     }
 
 
-TO_DOWNLOAD = [CANDIDATOS_VAGAS, ELEITORADO, CANDIDATOS, CANDIDATOS_LEGENDAS, RESULTADOS_APURACAO, RESULTADOS_VOTACAO_NOMINAL, RESULTADOS_VOTACAO_PARTIDO, PRESTACAO_CONTAS]
+TO_DOWNLOAD = [CANDIDATOS_VAGAS, ELEITORADO, CANDIDATOS, CANDIDATOS_BENS, CANDIDATOS_LEGENDAS, RESULTADOS_APURACAO, RESULTADOS_VOTACAO_NOMINAL, RESULTADOS_VOTACAO_PARTIDO, PRESTACAO_CONTAS]
 
 def _TSEDownload(url_base, folder_path, passo=None, adicionais=None, **kwargs):
     """Realiza o download das páginas
@@ -50,7 +53,7 @@ def _TSEDownload(url_base, folder_path, passo=None, adicionais=None, **kwargs):
     if not adicionais:
         adicionais = []
 
-    url_anos = [url_base % {'ano': ano} for ano in ANOS_ELEICOES__OLD]
+    url_anos = [url_base % {'ano': ano} for ano in ANOS_ELEICOES]
 
     urls_download = url_anos + adicionais
     for url in urls_download:
