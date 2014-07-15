@@ -1,0 +1,13 @@
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_AL_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_1994_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_RR_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_1996_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_PE_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_TO_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_SE_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2000_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2004_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2006_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2002_BR.zip
+http://agencia.tse.jus.br/estatistica/sead/eleicoes/eleicoes2012/correspefet/ceft_2t_GO_30102012185205.zip
+http://agencia.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2008_BR.zip
