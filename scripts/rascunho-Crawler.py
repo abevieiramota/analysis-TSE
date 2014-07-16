@@ -6,14 +6,18 @@ import os
 import zipfile
 import socket
 
-PAGE_REQUEST_TIMEOUT = 60 # um minuto
-DOWNLOAD_REQUEST_TIMEOUT = 60 # 10 minutos
+CONFIG = dict(
+    PAGE_REQUEST_TIMEOUT = 60,
+    DOWNLOAD_REQUEST_TIMEOUT = 60
+)
 
 def extract_pages(url):
 
     visited_pages = set()
-    to_visit_pages = set([url])
+    to_visit_pages = set()
     to_download = set()
+
+    to_visit_pages.add(url)
 
     while to_visit_pages:
 
@@ -21,14 +25,13 @@ def extract_pages(url):
         print '*visitando {}'.format(top_url)
 
         try:
-            page_content = read_url(top_url, PAGE_REQUEST_TIMEOUT)
+            html = read_url(top_url, CONFIG["PAGE_REQUEST_TIMEOUT"])
         except Exception:
             # adiciona novamente ao conjunto e tenta novamente?
             to_visit_pages.add(top_url)
+            pass
 
-        soup = BeautifulSoup(page_content)
-        hrefs = (a['href'] for a in soup.findAll('a', href=True))
-        urls = set([get_full_url(top_url, href) for href in hrefs])
+        urls = extract_urls(top_url, html)
 
         for url in urls:
 
@@ -74,10 +77,18 @@ def get_full_url(top_url, href):
 
     return urlparse.urljoin(top_url, href)
 
+def extract_urls(url, html):
+
+    soup = BeautifulSoup(html)
+    hrefs = (a['href'] for a in soup.findAll('a', href=True))
+    urls = set([get_full_url(url, href) for href in hrefs])
+
+    return urls
+
 def download_zip(url):
 
     print '#baixando {}'.format(url)
-    content = read_url(url, DOWNLOAD_REQUEST_TIMEOUT)
+    content = read_url(url, CONFIG["DOWNLOAD_REQUEST_TIMEOUT"])
     print "#baixado {}".format(url)
 
     parsed_url = urlparse.urlparse(url)
@@ -119,6 +130,7 @@ def read_url(url, timeout):
         raise
     else:
         return page_content
+
 
 if __name__ == '__main__':
 
