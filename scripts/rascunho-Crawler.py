@@ -25,7 +25,7 @@ def extract_pages(url):
         print '*visitando {}'.format(top_url)
 
         try:
-            html = read_url(top_url, CONFIG["PAGE_REQUEST_TIMEOUT"])
+            html = read_url(top_url, timeout=CONFIG["PAGE_REQUEST_TIMEOUT"])
         except Exception:
             # adiciona novamente ao conjunto e tenta novamente?
             to_visit_pages.add(top_url)
@@ -50,10 +50,13 @@ def extract_pages(url):
 
     downloaded = []
     not_downloaded = []
+    zip_paths = []
+
     for download_url in to_download:
 
+        print ">baixando {}".format(download_url)
         try:
-            download_zip(download_url)
+            zip_path = download(download_url)
         except urllib2.URLError:
             print "erro ao baixar {}".format(download_url)
             not_downloaded.append(download_url)
@@ -62,6 +65,8 @@ def extract_pages(url):
             not_downloaded.append(download_url)
         else:
             downloaded.append(download_url)
+            zip_paths.append(zip_path)
+            print ">baixado {}".format(download_url)
 
     # loga zips baixados
     f = open('downloaded.txt', 'w')
@@ -72,6 +77,11 @@ def extract_pages(url):
     f = open('not_downloaded.txt', 'w')
     f.write('\n'.join(not_downloaded))
     f.close()
+
+    # unzipa
+    for zip_path in zip_paths:
+
+        unzip(zip_path)
 
 def get_full_url(top_url, href):
 
@@ -85,11 +95,9 @@ def extract_urls(url, html):
 
     return urls
 
-def download_zip(url):
+def download(url):
 
-    print '#baixando {}'.format(url)
-    content = read_url(url, CONFIG["DOWNLOAD_REQUEST_TIMEOUT"])
-    print "#baixado {}".format(url)
+    content = read_url(url, timeout=CONFIG["DOWNLOAD_REQUEST_TIMEOUT"])
 
     parsed_url = urlparse.urlparse(url)
     dir_path = parsed_url.path.rpartition('/')[0][1:]
@@ -104,15 +112,16 @@ def download_zip(url):
     zip_file.write(content)
     zip_file.close()
 
-    # extrai
-    print '@extraindo'
+    return zip_path
+
+def unzip(zip_path):
+
     path_wt_zip = zip_path.rpartition('.')[0]
     os.makedirs(path_wt_zip)
 
     ziped = zipfile.ZipFile(zip_path)
     ziped.extractall(path=path_wt_zip)
     ziped.close()
-    print '@extraido'
 
 def read_url(url, timeout):
 
