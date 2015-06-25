@@ -51,5 +51,7 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-scripts/estatistica/
-scripts/hotSites/
+
+# dataset
+tse_scrapy/full
+tse_scrapy/dataset

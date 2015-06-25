@@ -8,30 +8,31 @@ import socket
 
 CONFIG = dict(
     PAGE_REQUEST_TIMEOUT = 60,
-    DOWNLOAD_REQUEST_TIMEOUT = 60
+    DOWNLOAD_REQUEST_TIMEOUT = 600
 )
 
-def extract_pages(url):
+visited_pages = set()
+to_visit_pages = set()
+to_download = set()
 
-    visited_pages = set()
-    to_visit_pages = set()
-    to_download = set()
+def extract_pages(url):
 
     to_visit_pages.add(url)
 
     while to_visit_pages:
 
         top_url = to_visit_pages.pop()
-        print '*visitando {}'.format(top_url)
+        print '[BEGIN] craaaaaaaaaawling {}'.format(top_url)
 
         try:
             html = read_url(top_url, timeout=CONFIG["PAGE_REQUEST_TIMEOUT"])
         except Exception:
             # adiciona novamente ao conjunto e tenta novamente?
             to_visit_pages.add(top_url)
-            pass
+        else:
+            print "[END] craaaaaaaaaawling {}".format(top_url)
 
-        urls = extract_urls(top_url, html)
+        urls = find_urls(top_url, html)
 
         for url in urls:
 
@@ -54,26 +55,24 @@ def extract_pages(url):
 
     for download_url in to_download:
 
-        print ">baixando {}".format(download_url)
+        print "[BEGIN] download {}".format(download_url)
         try:
             zip_path = download(download_url)
         except urllib2.URLError:
-            print "erro ao baixar {}".format(download_url)
             not_downloaded.append(download_url)
         except socket.timeout:
-            print "timeout ao baixar {}".format(download_url)
             not_downloaded.append(download_url)
         else:
             downloaded.append(download_url)
             zip_paths.append(zip_path)
-            print ">baixado {}".format(download_url)
+            print "[END] download {}".format(download_url)
 
-    # loga zips baixados
+    # registra zips baixados
     f = open('downloaded.txt', 'w')
     f.write('\n'.join(downloaded))
     f.close()
-    # loga zips não baixados
 
+    # registra zips não baixados
     f = open('not_downloaded.txt', 'w')
     f.write('\n'.join(not_downloaded))
     f.close()
@@ -87,7 +86,7 @@ def get_full_url(top_url, href):
 
     return urlparse.urljoin(top_url, href)
 
-def extract_urls(url, html):
+def find_urls(url, html):
 
     soup = BeautifulSoup(html)
     hrefs = (a['href'] for a in soup.findAll('a', href=True))
@@ -129,13 +128,13 @@ def read_url(url, timeout):
         page = urllib2.urlopen(url, timeout=timeout)
         page_content = page.read()
     except urllib2.HTTPError as e:
-        print "HTTPError: {} ({})".format(url, e.code)
+        print "[ERRO] HTTPError: {} ({})".format(url, e.code)
         raise
     except urllib2.URLError as e:
-        print "URLError: {} ({})".format(url, e.reason)
+        print "[ERRO] URLError: {} ({})".format(url, e.reason)
         raise
     except socket.timeout:
-        print "timeout: {} time: {}".format(url, timeout)
+        print "[ERRO] timeout: {} time: {}".format(url, timeout)
         raise
     else:
         return page_content

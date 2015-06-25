@@ -6,20 +6,19 @@ import zipfile
 DADOS_DIR = 'dados'
 ANOS_ELEICOES = [1945, 1947, 1950, 1954, 1955, 1958, 1960, 1962, 1965, 1966, 1970, 1974, 1978, 1982, 1986, 1989, 1990, 1994, 1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014]
 
-ELEITORADO = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_%(ano)d.zip",
-              'adicionais': ['http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_ATUAL.zip'],
-              'folder_name': 'eleitorado'
-              }
+ELEITORADO = {
+'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_%(ano)d.zip",
+'adicionais': ['http://agencia.tse.jus.br/estatistica/sead/odsele/perfil_eleitorado/perfil_eleitorado_ATUAL.zip'],
+              'folder_name': 'eleitorado' }
 
 CANDIDATOS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_cand/consulta_cand_%(ano)d.zip",
               'folder_name': 'candidatos'}
 
-CANDIDATOS_BENS = {'http://agencia.tse.jus.br/estatistica/sead/odsele/bem_candidato/bem_candidato_%(ano)d.zip',
-                   'folder_name': 'candidatos_bens'}
+CANDIDATOS_BENS = {'url_base': 'http://agencia.tse.jus.br/estatistica/sead/odsele/bem_candidato/bem_candidato_%(ano)d.zip',
+              'folder_name': 'candidatos_bens'}
 
 CANDIDATOS_LEGENDAS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_legendas/consulta_legendas_%(ano)d.zip",
-                       'folder_name': 'candidatos_legendas'
-                       }
+                       'folder_name': 'candidatos_legendas' }
 
 CANDIDATOS_VAGAS = {'url_base': "http://agencia.tse.jus.br/estatistica/sead/odsele/consulta_vagas/consulta_vagas_%(ano)d.zip",
                     'folder_name': 'candidatos_vagas'
@@ -56,6 +55,7 @@ def _TSEDownload(url_base, folder_path, passo=None, adicionais=None, **kwargs):
     url_anos = [url_base % {'ano': ano} for ano in ANOS_ELEICOES]
 
     urls_download = url_anos + adicionais
+
     for url in urls_download:
 
         try:
@@ -71,6 +71,7 @@ def _download_extract(url, folder_path):
         url_opened = urllib2.urlopen(url)
         content = url_opened.read()
     except urllib2.HTTPError:
+        print 'Não foi possível fazer o download de %s' % url
         raise
     else:
         url_opened.close()
