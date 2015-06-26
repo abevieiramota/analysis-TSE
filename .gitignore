@@ -53,5 +53,5 @@ coverage.xml
 docs/_build/
 
 # dataset
-tse_scrapy/full
-tse_scrapy/dataset
+dataset/
+full/
