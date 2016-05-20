@@ -28,7 +28,7 @@ class SaveREADMEPipeline(object):
 
 class UnzipPipeline(object):
 
-    re_file_path = re.compile(r'http://(.*).zip.*')
+    re_file_path = re.compile(r'http://(.*).zip')
 
     def process_item(self, item, spider):
 
@@ -38,7 +38,7 @@ class UnzipPipeline(object):
 
             file_url = item['file_urls'][0]
             file_info = item['files'][0]
-            unzipped_file_path = os.path.join("dataset", UnzipPipeline.re_file_path.findall(file_url)[0].)
+            unzipped_file_path = os.path.join("dataset", UnzipPipeline.re_file_path.findall(file_url)[0])
 
             if not os.path.exists(unzipped_file_path):
                 os.makedirs(unzipped_file_path)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import os
+
+CUR_DIR = os.path.dirname(os.path.realpath(__file__))
 # Scrapy settings for tse_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
@@ -62,9 +65,11 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {'scrapy.pipelines.files.FilesPipeline': 1,
-                'servidores_scrapy.pipelines.SaveREADMEPipeline': 2,
-                'servidores_scrapy.pipelines.UnzipPipeline':3, }
-FILES_STORE = 'C:\\Users\\abelardomota\\Documents\\GitHub\\analysis-TSE\\TSE\\tse_scrapy'
+                 'tse_scrapy.pipelines.SaveREADMEPipeline': 2,
+                 'tse_scrapy.pipelines.UnzipPipeline':3, }
+                
+                
+FILES_STORE = os.path.join(CUR_DIR, '..', 'files')
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
