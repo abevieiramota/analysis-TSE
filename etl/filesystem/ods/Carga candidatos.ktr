@@ -69,15 +69,108 @@
   <created_date>2016&#x2f;05&#x2f;22 19&#x3a;29&#x3a;42.742</created_date>
   <modified_user>-</modified_user>
   <modified_date>2016&#x2f;05&#x2f;22 19&#x3a;29&#x3a;42.742</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>tse</name>
+    <server/>
+    <type>POSTGRESQL</type>
+    <access>JNDI</access>
+    <database>tse</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
   <hop> <from>Text file input - consulta_cand_2014_&#x3c;estado&#x3e;.txt</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Table output</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Table output - candidato</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Regex Evaluation - FamilyName, Title, FirstName</name>
+    <type>RegexEval</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <script><![CDATA[([A-Za-z]+),\s([A-Za-z]+)\.\s(.*)]]></script>    <matcher>Name</matcher>
+    <resultfieldname>hasTitle</resultfieldname>
+    <usevar>N</usevar>
+    <allowcapturegroups>Y</allowcapturegroups>
+    <replacefields>N</replacefields>
+    <canoneq>N</canoneq>
+    <caseinsensitive>N</caseinsensitive>
+    <comment>N</comment>
+    <dotall>N</dotall>
+    <multiline>N</multiline>
+    <unicode>N</unicode>
+    <unix>N</unix>
+    <fields>
+      <field>
+        <name>FamilyName</name>
+        <type>String</type>
+        <format/>
+        <group/>
+        <decimal/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <nullif/>
+        <ifnull/>
+        <trimtype>none</trimtype>
+      </field>
+      <field>
+        <name>Title</name>
+        <type>String</type>
+        <format/>
+        <group/>
+        <decimal/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <nullif/>
+        <ifnull/>
+        <trimtype>none</trimtype>
+      </field>
+      <field>
+        <name>FirstName</name>
+        <type>String</type>
+        <format/>
+        <group/>
+        <decimal/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <nullif/>
+        <ifnull/>
+        <trimtype>none</trimtype>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>800</yloc>
+      <draw>N</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Regex Evaluation - Split Name - train</name>
     <type>RegexEval</type>
@@ -148,8 +241,8 @@
     </step>
 
   <step>
-    <name>Regex Evaluation - FamilyName, Title, FirstName</name>
-    <type>RegexEval</type>
+    <name>Select values</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -158,61 +251,394 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <script><![CDATA[([A-Za-z]+),\s([A-Za-z]+)\.\s(.*)]]></script>    <matcher>Name</matcher>
-    <resultfieldname>hasTitle</resultfieldname>
-    <usevar>N</usevar>
-    <allowcapturegroups>Y</allowcapturegroups>
-    <replacefields>N</replacefields>
-    <canoneq>N</canoneq>
-    <caseinsensitive>N</caseinsensitive>
-    <comment>N</comment>
-    <dotall>N</dotall>
-    <multiline>N</multiline>
-    <unicode>N</unicode>
-    <unix>N</unix>
+    <fields>      <field>        <name>ANO_ELEICAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NUM_TURNO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SIGLA_UF</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SIGLA_UE</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_UE</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_CARGO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_CARGO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NOME_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SEQUENCIAL_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NUMERO_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CPF_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NOME_URNA_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>COD_SITUACAO_CANDIDATURA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DES_SITUACAO_CANDIDATURA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NUMERO_PARTIDO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SIGLA_PARTIDO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NOME_PARTIDO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_LEGENDA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SIGLA_LEGENDA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>COMPOSICAO_LEGENDA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NOME_LEGENDA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_OCUPACAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_OCUPACAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DATA_NASCIMENTO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NUM_TITULO_ELEITORAL_CANDIDATO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>IDADE_DATA_ELEICAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_SEXO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_SEXO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>COD_GRAU_INSTRUCAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_GRAU_INSTRUCAO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_ESTADO_CIVIL</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_ESTADO_CIVIL</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_COR_RACA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_COR_RACA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_NACIONALIDADE</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESCRICAO_NACIONALIDADE</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>SIGLA_UF_NASCIMENTO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>CODIGO_MUNICIPIO_NASCIMENTO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NOME_MUNICIPIO_NASCIMENTO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESPESA_MAX_CAMPANHA</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>COD_SIT_TOT_TURNO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>DESC_SIT_TOT_TURNO</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>NM_EMAIL</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>208</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table output - candidato</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>tse</connection>
+    <schema/>
+    <table>candidato</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
     <fields>
-      <field>
-        <name>FamilyName</name>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
-      </field>
-      <field>
-        <name>Title</name>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
-      </field>
-      <field>
-        <name>FirstName</name>
-        <type>String</type>
-        <format/>
-        <group/>
-        <decimal/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <nullif/>
-        <ifnull/>
-        <trimtype>none</trimtype>
-      </field>
+        <field>
+          <column_name>ANO_ELEICAO</column_name>
+          <stream_name>ANO_ELEICAO</stream_name>
+        </field>
+        <field>
+          <column_name>NUM_TURNO</column_name>
+          <stream_name>NUM_TURNO</stream_name>
+        </field>
+        <field>
+          <column_name>SIGLA_UF</column_name>
+          <stream_name>SIGLA_UF</stream_name>
+        </field>
+        <field>
+          <column_name>SIGLA_UE</column_name>
+          <stream_name>SIGLA_UE</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_UE</column_name>
+          <stream_name>DESCRICAO_UE</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_CARGO</column_name>
+          <stream_name>CODIGO_CARGO</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_CARGO</column_name>
+          <stream_name>DESCRICAO_CARGO</stream_name>
+        </field>
+        <field>
+          <column_name>NOME_CANDIDATO</column_name>
+          <stream_name>NOME_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>SEQUENCIAL_CANDIDATO</column_name>
+          <stream_name>SEQUENCIAL_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>NUMERO_CANDIDATO</column_name>
+          <stream_name>NUMERO_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>CPF_CANDIDATO</column_name>
+          <stream_name>CPF_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>NOME_URNA_CANDIDATO</column_name>
+          <stream_name>NOME_URNA_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>COD_SITUACAO_CANDIDATURA</column_name>
+          <stream_name>COD_SITUACAO_CANDIDATURA</stream_name>
+        </field>
+        <field>
+          <column_name>DES_SITUACAO_CANDIDATURA</column_name>
+          <stream_name>DES_SITUACAO_CANDIDATURA</stream_name>
+        </field>
+        <field>
+          <column_name>NUMERO_PARTIDO</column_name>
+          <stream_name>NUMERO_PARTIDO</stream_name>
+        </field>
+        <field>
+          <column_name>SIGLA_PARTIDO</column_name>
+          <stream_name>SIGLA_PARTIDO</stream_name>
+        </field>
+        <field>
+          <column_name>NOME_PARTIDO</column_name>
+          <stream_name>NOME_PARTIDO</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_LEGENDA</column_name>
+          <stream_name>CODIGO_LEGENDA</stream_name>
+        </field>
+        <field>
+          <column_name>SIGLA_LEGENDA</column_name>
+          <stream_name>SIGLA_LEGENDA</stream_name>
+        </field>
+        <field>
+          <column_name>COMPOSICAO_LEGENDA</column_name>
+          <stream_name>COMPOSICAO_LEGENDA</stream_name>
+        </field>
+        <field>
+          <column_name>NOME_LEGENDA</column_name>
+          <stream_name>NOME_LEGENDA</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_OCUPACAO</column_name>
+          <stream_name>CODIGO_OCUPACAO</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_OCUPACAO</column_name>
+          <stream_name>DESCRICAO_OCUPACAO</stream_name>
+        </field>
+        <field>
+          <column_name>DATA_NASCIMENTO</column_name>
+          <stream_name>DATA_NASCIMENTO</stream_name>
+        </field>
+        <field>
+          <column_name>NUM_TITULO_ELEITORAL_CANDIDATO</column_name>
+          <stream_name>NUM_TITULO_ELEITORAL_CANDIDATO</stream_name>
+        </field>
+        <field>
+          <column_name>IDADE_DATA_ELEICAO</column_name>
+          <stream_name>IDADE_DATA_ELEICAO</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_SEXO</column_name>
+          <stream_name>CODIGO_SEXO</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_SEXO</column_name>
+          <stream_name>DESCRICAO_SEXO</stream_name>
+        </field>
+        <field>
+          <column_name>COD_GRAU_INSTRUCAO</column_name>
+          <stream_name>COD_GRAU_INSTRUCAO</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_GRAU_INSTRUCAO</column_name>
+          <stream_name>DESCRICAO_GRAU_INSTRUCAO</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_ESTADO_CIVIL</column_name>
+          <stream_name>CODIGO_ESTADO_CIVIL</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_ESTADO_CIVIL</column_name>
+          <stream_name>DESCRICAO_ESTADO_CIVIL</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_COR_RACA</column_name>
+          <stream_name>CODIGO_COR_RACA</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_COR_RACA</column_name>
+          <stream_name>DESCRICAO_COR_RACA</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_NACIONALIDADE</column_name>
+          <stream_name>CODIGO_NACIONALIDADE</stream_name>
+        </field>
+        <field>
+          <column_name>DESCRICAO_NACIONALIDADE</column_name>
+          <stream_name>DESCRICAO_NACIONALIDADE</stream_name>
+        </field>
+        <field>
+          <column_name>SIGLA_UF_NASCIMENTO</column_name>
+          <stream_name>SIGLA_UF_NASCIMENTO</stream_name>
+        </field>
+        <field>
+          <column_name>CODIGO_MUNICIPIO_NASCIMENTO</column_name>
+          <stream_name>CODIGO_MUNICIPIO_NASCIMENTO</stream_name>
+        </field>
+        <field>
+          <column_name>NOME_MUNICIPIO_NASCIMENTO</column_name>
+          <stream_name>NOME_MUNICIPIO_NASCIMENTO</stream_name>
+        </field>
+        <field>
+          <column_name>DESPESA_MAX_CAMPANHA</column_name>
+          <stream_name>DESPESA_MAX_CAMPANHA</stream_name>
+        </field>
+        <field>
+          <column_name>COD_SIT_TOT_TURNO</column_name>
+          <stream_name>COD_SIT_TOT_TURNO</stream_name>
+        </field>
+        <field>
+          <column_name>DESC_SIT_TOT_TURNO</column_name>
+          <stream_name>DESC_SIT_TOT_TURNO</stream_name>
+        </field>
+        <field>
+          <column_name>NM_EMAIL</column_name>
+          <stream_name>NM_EMAIL</stream_name>
+        </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>800</yloc>
-      <draw>N</draw>
+      <xloc>400</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
       </GUI>
     </step>
 
@@ -983,238 +1409,8 @@
     <sizeFieldName/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>96</xloc>
+      <xloc>208</xloc>
       <yloc>96</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>ANO_ELEICAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NUM_TURNO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SIGLA_UF</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SIGLA_UE</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_UE</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_CARGO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_CARGO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NOME_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SEQUENCIAL_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NUMERO_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CPF_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NOME_URNA_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>COD_SITUACAO_CANDIDATURA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DES_SITUACAO_CANDIDATURA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NUMERO_PARTIDO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SIGLA_PARTIDO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NOME_PARTIDO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_LEGENDA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SIGLA_LEGENDA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>COMPOSICAO_LEGENDA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NOME_LEGENDA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_OCUPACAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_OCUPACAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DATA_NASCIMENTO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NUM_TITULO_ELEITORAL_CANDIDATO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>IDADE_DATA_ELEICAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_SEXO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_SEXO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>COD_GRAU_INSTRUCAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_GRAU_INSTRUCAO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_ESTADO_CIVIL</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_ESTADO_CIVIL</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_COR_RACA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_COR_RACA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_NACIONALIDADE</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESCRICAO_NACIONALIDADE</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>SIGLA_UF_NASCIMENTO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>CODIGO_MUNICIPIO_NASCIMENTO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NOME_MUNICIPIO_NASCIMENTO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESPESA_MAX_CAMPANHA</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>COD_SIT_TOT_TURNO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>DESC_SIT_TOT_TURNO</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>NM_EMAIL</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>96</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection/>
-    <schema/>
-    <table/>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>N</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>296</xloc>
-      <yloc>240</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
