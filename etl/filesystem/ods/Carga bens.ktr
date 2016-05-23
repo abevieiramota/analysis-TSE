@@ -284,7 +284,22 @@
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+      <meta>        <name>VALOR_BEM</name>
+        <rename>VALOR_BEM</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>4</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>144</xloc>
       <yloc>160</yloc>
@@ -356,7 +371,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>344</xloc>
+      <xloc>544</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
       </GUI>
@@ -549,14 +564,14 @@
       <field>
         <name>VALOR_BEM</name>
         <type>Number</type>
-        <format>&#x23;.&#x23;</format>
+        <format>0.00</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
         <ifnull/>
         <position>-1</position>
-        <length>15</length>
+        <length>-1</length>
         <precision>0</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
